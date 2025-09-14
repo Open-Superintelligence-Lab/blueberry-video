@@ -4,6 +4,8 @@ Goal is for anyone to be able to just download this repo and run it on their GPU
 
 Some settings and customizing should be possible.
 
+Original Open Sora README:
+
 ---
 
 <p align="center">
