@@ -1,182 +1,40 @@
-# Contributing to Blueberry Video
+Building great things is not easy. It's a journey. 🚀
 
-Welcome to the Blueberry Video research community! We're excited to have you contribute to advancing video generation research.
+It requires scientific rigor - or our science will be mid 🗿
 
-## Philosophy
+We believe that good science requires giving freedom to the scientist.
 
-This is a **research-first** repository. We value:
+Our goal is to improve LLMs, video generation, and more, but the method is not to tell you what to do, but to inspire you and let you think of research you believe in.
 
-- 🔬 **Rigorous experimentation** over quick hacks
-- 📊 **Documented findings** over undocumented code
-- 🤝 **Open collaboration** over competition
-- 🎯 **Focused research questions** over broad goals
+To keep the hing quality of our research, here are some legit real deal no-cap rules:
 
-## How to Contribute
+## Explain your research will less jargon so it's easier to understand:
 
-### 1. Research Experiments (Primary)
+### Good example:
 
-The main way to contribute is by conducting experiments and sharing your findings.
+In PLASA, the number of tokens each layer looks at depends on its position in the transformer:
 
-**Steps:**
+- Early layers (first few): use dense attention → look at all tokens (100%).
 
-1. **Fork the repository**
-   ```bash
-   git clone https://github.com/YOUR-USERNAME/blueberry-video.git
-   cd blueberry-video
-   ```
+- Middle layers: use aggressive sparse attention → keep only about 25% of tokens (1/4 of full).
 
-2. **Set up your environment**
-   ```bash
-   pip install -r requirements.txt
-   ```
+- Late layers: use moderate sparse attention → keep about 50% of tokens (half of full).
 
-3. **Create your experiment**
-   ```bash
-   cp -r experiments/exp_template experiments/exp1_your_research
-   ```
+So, for example in a 4-layer model:
+Layer 1 → 100%, Layer 2 → 25%, Layer 3 → 25%, Layer 4 → 50%.
 
-4. **Define your research question**
-   
-   Edit `experiments/exp1_your_research/README.md` and clearly state:
-   - Research question
-   - Hypothesis
-   - Methodology
-   - Expected outcomes
+### This is the same thing just harder to understand:
 
-5. **Configure your experiment**
-   
-   Edit `experiments/exp1_your_research/config.yaml` with your parameters.
+Implements per-layer adaptive sparse attention with progressive sparsity scheduling to improve upon Exp1's uniform DeepSeek Sparse Attention approach. PLASA adapts sparsity levels based on transformer layer hierarchy: dense early layers (k=L), aggressive sparse middle layers (k=L/4), and moderate sparse late layers (k=L/2).
 
-6. **Run your experiment**
-   ```bash
-   python train_video.py --config experiments/exp1_your_research/config.yaml
-   ```
-
-7. **Document your findings**
-   
-   Update your experiment's README with:
-   - Quantitative results
-   - Qualitative observations
-   - Sample outputs
-   - Conclusions
-   - Future work suggestions
-
-8. **Submit a Pull Request**
-   
-   Once you've completed your experiment and documented the results, submit a PR to merge it back into the main repository.
-
-### 2. Code Improvements
-
-You can also contribute by:
-
-- **Adding new architectures** - Implement and document new video generation models
-- **Improving training utilities** - Better optimizers, schedulers, data loaders
-- **Bug fixes** - Fix issues you encounter
-- **Documentation** - Improve explanations and examples
-
-## Experiment Guidelines
-
-### What Makes a Good Experiment?
-
-✅ **Clear Research Question**
-- "How does attention sparsity affect temporal consistency?"
-- NOT: "Try some stuff with attention"
-
-✅ **Controlled Variables**
-- Change ONE thing at a time
-- Document what you changed and why
-
-✅ **Reproducible**
-- Include all configs
-- Document random seeds
-- List dependencies
-
-✅ **Well Documented**
-- Write clear explanations
-- Include visual results when possible
-- Share negative results too!
-
-### Experiment Naming
-
-Use descriptive names:
-- ✅ `exp1_sparse_attention_temporal`
-- ✅ `exp2_frame_rate_ablation`
-- ❌ `exp1_test`
-- ❌ `my_experiment`
-
-## Code Style
-
-We value **readable code** over clever code.
-
-### Python Style
-- Follow PEP 8
-- Use meaningful variable names
-- Add docstrings to functions
-- Keep functions focused and small
-
-### Example
-
-```python
-def train_epoch(model, dataloader, optimizer, device, epoch):
-    """
-    Train model for one epoch
-    
-    Args:
-        model: Video generation model
-        dataloader: Training data loader
-        optimizer: Optimizer instance
-        device: torch device (cuda/cpu)
-        epoch: Current epoch number
-        
-    Returns:
-        Average loss for the epoch
-    """
-    # Clear implementation here
-    pass
-```
-
-## Pull Request Process
-
-1. **Create a descriptive PR title**
-   - ✅ "Experiment: Sparse Attention for Temporal Consistency"
-   - ✅ "Fix: Training script batch size handling"
-   - ❌ "Update"
-
-2. **Describe your changes**
-   - What did you change?
-   - Why did you change it?
-   - What did you learn?
-
-3. **Include results**
-   - For experiments: Include key findings
-   - For code changes: Show before/after behavior
-
-4. **Wait for review**
-   - Address feedback constructively
-   - Be open to suggestions
-
-## Research Ethics
-
-- **Give credit** - Cite papers and acknowledge ideas
-- **Share failures** - Negative results are valuable
-- **Be honest** - Don't cherry-pick results
-- **Help others** - Answer questions, review PRs
-
-## Questions?
-
-- Open an issue for discussions
-- Tag experiments with your GitHub handle
-- Help others with their experiments
-
-## Recognition
-
-All contributors will be:
-- Listed in the experiments table
-- Credited in the README
-- Part of the research community
+The first method is using common and familiar words like "token", "layer" and "attention", so it's a lot easier to understand.
 
 ---
 
-**Thank you for contributing to open science! 🚀**
-
-Together we're accelerating video generation research.
+0. If you didn't read your AI generated text / code, don't expect others to (don't submit it 🤗). AI generated experiment descrption and code are mid.
+1. AI can not replace your thinking - understand what is happening. Experiments can be very simple and small, that is not an issue.
+2. Reviewers can quickly tell low-effort, unreviewed AI output from quality work — especially in PR descriptions. Clearly and concisely explain what you did, why, and how, even if the experiment failed / results were negative - those are also valuable. 📝
+3. Make your first 1-2 sentences of pull request show the value of your contribution. ✨
+4. Ask questions. 🤔
+5. Don't create contributions just to appear as contributor (eg. "typo fix"). 🚫
+6. Remember - science is not a chase for clout or quick dopamine - it's a journey of your curiosity (and low effort contributions will repulse employers, not attract them). 💪
