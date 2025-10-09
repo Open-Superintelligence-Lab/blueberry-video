@@ -1,6 +1,5 @@
 {
-  "example_video_001": "A cat playing with a ball in a sunny garden",
-  "example_video_002": "Beautiful sunset over the ocean with waves crashing",
-  "example_video_003": "Person walking through a misty forest path"
+  "sample_001_circle": "A green circle moving from left to right",
+  "sample_002_square": "A blue square expanding from center",
+  "sample_003_line": "A red line rotating around center"
 }
-

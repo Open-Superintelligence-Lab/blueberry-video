@@ -117,17 +117,19 @@ class DummyVideoDataset(Dataset):
     Dummy dataset for testing without real video data
     """
     
-    def __init__(self, num_samples=100, resolution=256, num_frames=16):
+    def __init__(self, num_samples=100, resolution=256, num_frames=16, latent_channels=16):
         self.num_samples = num_samples
         self.resolution = resolution
         self.num_frames = num_frames
+        self.latent_channels = latent_channels
     
     def __len__(self):
         return self.num_samples
     
     def __getitem__(self, idx):
-        # Random latents
-        latents = torch.randn(3, self.num_frames, self.resolution, self.resolution)
+        # Random latents - shape: (latent_channels, num_frames, height, width)
+        # Note: In real training, these would be VAE-encoded latents, not raw RGB
+        latents = torch.randn(self.latent_channels, self.num_frames, self.resolution, self.resolution)
         
         # Dummy prompt
         prompts = [

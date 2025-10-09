@@ -26,6 +26,10 @@ def train_epoch(model, dataloader, optimizer, device, epoch):
         # Forward pass
         optimizer.zero_grad()
         
+        # Reshape latents to model's expected format
+        # From [batch, channels, frames, height, width] to [batch, frames, channels, height, width]
+        latents = latents.permute(0, 2, 1, 3, 4)
+        
         # Simple diffusion loss
         noise = torch.randn_like(latents)
         timesteps = torch.randint(0, 1000, (latents.shape[0],), device=device)
@@ -33,9 +37,27 @@ def train_epoch(model, dataloader, optimizer, device, epoch):
         # Add noise to latents
         noisy_latents = latents + noise
         
-        # Predict noise (simplified - just for demo)
-        # In real training, you'd use proper conditioning with text embeddings
-        loss = nn.functional.mse_loss(noisy_latents, latents)
+        # Create dummy encoder hidden states for text conditioning
+        # Shape: (batch_size, seq_length, text_embed_dim)
+        batch_size = latents.shape[0]
+        text_seq_len = 10  # Must match model's max_text_seq_length
+        encoder_hidden_states = torch.randn(batch_size, text_seq_len, 4096, device=device)
+        
+        # Predict noise using the model
+        # Model forward expects: (hidden_states, timestep, encoder_hidden_states)
+        # hidden_states shape: [batch, frames, channels, height, width]
+        model_output = model(
+            hidden_states=noisy_latents,
+            timestep=timesteps,
+            encoder_hidden_states=encoder_hidden_states,
+            return_dict=True
+        )
+        
+        # Get the predicted output
+        predicted_noise = model_output.sample
+        
+        # Compute loss (predict the noise)
+        loss = nn.functional.mse_loss(predicted_noise, noise)
         
         # Backward pass
         loss.backward()
@@ -65,12 +87,20 @@ def main():
     
     # Initialize small model for demo
     print("\nInitializing CogVideoX model (small version for demo)...")
+    # Note: sample dimensions must match the input latent dimensions
+    # For 64x64 resolution with patch_size=2, we get 32x32 patches
+    # For 8 frames with temporal_compression_ratio=4: (8-1)*4+1 = 29
+    text_seq_len = 10  # Dummy text sequence length
     model = CogVideoXTransformer3DModel(
         num_attention_heads=4,
         attention_head_dim=32,
         in_channels=16,
         out_channels=16,
         num_layers=2,  # Just 2 layers for demo
+        sample_width=32,  # 64/2 (patch_size)
+        sample_height=32,  # 64/2 (patch_size)
+        sample_frames=29,  # (8-1)*4+1 for 8 frames
+        max_text_seq_length=text_seq_len,  # Must match encoder_hidden_states seq length
     )
     model = model.to(device)
     
@@ -83,7 +113,8 @@ def main():
     dataset = DummyVideoDataset(
         num_samples=50,
         resolution=64,  # Small resolution for demo
-        num_frames=8    # Few frames for demo
+        num_frames=8,   # Few frames for demo
+        latent_channels=16  # Match model's in_channels
     )
     
     dataloader = DataLoader(

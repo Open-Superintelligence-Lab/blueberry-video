@@ -876,6 +876,7 @@ class HunyuanVideoTransformer3DModel(ModelMixin, ConfigMixin, PeftAdapterMixin, 
         "HunyuanVideoPatchEmbed",
         "HunyuanVideoTokenRefiner",
     ]
+    config_name = "config.json"
 
     @register_to_config
     def __init__(
