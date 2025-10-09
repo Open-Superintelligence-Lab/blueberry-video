@@ -1,0 +1,30 @@
+# Experiment 1: Baseline CogVideoX Training
+# Simple baseline experiment on synthetic data
+
+# Model settings
+model_type: cogvideox
+num_attention_heads: 8
+attention_head_dim: 32
+in_channels: 16
+num_layers: 12
+
+# Data settings
+data_path: ../../data/videos
+resolution: 256
+num_frames: 16
+
+# Training settings
+batch_size: 1
+num_epochs: 10
+learning_rate: 1e-4
+weight_decay: 0.01
+optimizer: adamw
+
+# Scheduler
+scheduler: cosine
+min_lr: 1e-6
+
+# Output
+save_dir: ./checkpoints
+save_every: 5
+

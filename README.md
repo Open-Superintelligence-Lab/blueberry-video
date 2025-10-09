@@ -1,5 +1,7 @@
 # Blueberry Video
 
+> ⚠️ **Active Development**: This repository is still in development. Possible bugs may exist. We welcome any help with debugging or contributions to new experiments!
+
 **Open Superintelligence Lab** - Open research for everyone. We publish all of our research for the sake of accelerating science. Learn real AI research from a real research lab.
 
 ## Quick Start
