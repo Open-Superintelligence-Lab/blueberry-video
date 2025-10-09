@@ -1,10 +1,37 @@
-datasets
-transformers
-torchtune
-torchao
-matplotlib
-# lm-eval
+# Video Generation Requirements
 
-# Single T4 GPU training
-# tensorstore
-# zarr
+# Core dependencies
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.24.0
+tqdm>=4.65.0
+
+# Video processing
+opencv-python>=4.8.0
+av>=10.0.0
+
+# Configuration
+pyyaml>=6.0
+
+# Diffusion models
+diffusers>=0.27.0
+transformers>=4.38.0
+accelerate>=0.27.0
+
+# Image processing
+pillow>=10.0.0
+imageio>=2.31.0
+imageio-ffmpeg>=0.4.9
+
+# Optional: For better performance
+einops>=0.7.0
+xformers>=0.0.22  # For memory-efficient attention
+
+# Development
+pytest>=7.4.0
+black>=23.0.0
+flake8>=6.0.0
+
+# Visualization
+matplotlib>=3.7.0
+tensorboard>=2.14.0

@@ -1,0 +1,34 @@
+# Hunyuan Video Training Configuration
+
+# Model settings
+model_type: hunyuan
+num_attention_heads: 24
+attention_head_dim: 88
+in_channels: 16
+num_layers: 36
+
+# Data settings
+data_path: ./data/videos
+resolution: 256
+num_frames: 16
+
+# Training settings
+batch_size: 1
+num_epochs: 100
+learning_rate: 1e-4
+weight_decay: 0.01
+optimizer: adamw
+beta1: 0.9
+beta2: 0.999
+
+# Scheduler settings
+scheduler: cosine
+min_lr: 1e-6
+
+# Checkpointing
+save_dir: ./checkpoints/hunyuan
+save_every: 10
+
+# Data loading
+num_workers: 4
+
