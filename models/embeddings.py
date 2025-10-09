@@ -19,7 +19,7 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 
-from ..utils import deprecate
+from diffusers_lib.utils import deprecate
 from .activations import FP32SiLU, get_activation
 from .attention_processor import Attention
 

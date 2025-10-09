@@ -18,24 +18,24 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from diffusers.loaders import FromOriginalModelMixin
+from diffusers_lib.loaders import FromOriginalModelMixin
+from diffusers_lib.configuration_utils import ConfigMixin, register_to_config
+from diffusers_lib.loaders import PeftAdapterMixin
+from diffusers_lib.utils import USE_PEFT_BACKEND, logging, scale_lora_layers, unscale_lora_layers
+from diffusers_lib.models.modeling_outputs import Transformer2DModelOutput
+from diffusers_lib.models.modeling_utils import ModelMixin
 
-from ...configuration_utils import ConfigMixin, register_to_config
-from ...loaders import PeftAdapterMixin
-from ...utils import USE_PEFT_BACKEND, logging, scale_lora_layers, unscale_lora_layers
-from ..attention import FeedForward
-from ..attention_processor import Attention, AttentionProcessor
-from ..cache_utils import CacheMixin
-from ..embeddings import (
+from .attention import FeedForward
+from .attention_processor import Attention, AttentionProcessor
+from .cache_utils import CacheMixin
+from .embeddings import (
     CombinedTimestepTextProjEmbeddings,
     PixArtAlphaTextProjection,
     TimestepEmbedding,
     Timesteps,
     get_1d_rotary_pos_embed,
 )
-from ..modeling_outputs import Transformer2DModelOutput
-from ..modeling_utils import ModelMixin
-from ..normalization import AdaLayerNormContinuous, AdaLayerNormZero, AdaLayerNormZeroSingle, FP32LayerNorm
+from .normalization import AdaLayerNormContinuous, AdaLayerNormZero, AdaLayerNormZeroSingle, FP32LayerNorm
 
 
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name

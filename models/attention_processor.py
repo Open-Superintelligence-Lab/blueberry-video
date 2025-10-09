@@ -19,10 +19,10 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 
-from ..image_processor import IPAdapterMaskProcessor
-from ..utils import deprecate, is_torch_xla_available, logging
-from ..utils.import_utils import is_torch_npu_available, is_torch_xla_version, is_xformers_available
-from ..utils.torch_utils import is_torch_version, maybe_allow_in_graph
+from diffusers_lib.image_processor import IPAdapterMaskProcessor
+from diffusers_lib.utils import deprecate, is_torch_xla_available, logging
+from diffusers_lib.utils.import_utils import is_torch_npu_available, is_torch_xla_version, is_xformers_available
+from diffusers_lib.utils.torch_utils import is_torch_version, maybe_allow_in_graph
 
 
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name

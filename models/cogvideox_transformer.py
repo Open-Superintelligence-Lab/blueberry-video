@@ -18,17 +18,18 @@ from typing import Any, Dict, Optional, Tuple, Union
 import torch
 from torch import nn
 
-from ...configuration_utils import ConfigMixin, register_to_config
-from ...loaders import PeftAdapterMixin
-from ...utils import USE_PEFT_BACKEND, logging, scale_lora_layers, unscale_lora_layers
-from ...utils.torch_utils import maybe_allow_in_graph
-from ..attention import Attention, FeedForward
-from ..attention_processor import AttentionProcessor, CogVideoXAttnProcessor2_0, FusedCogVideoXAttnProcessor2_0
-from ..cache_utils import CacheMixin
-from ..embeddings import CogVideoXPatchEmbed, TimestepEmbedding, Timesteps
-from ..modeling_outputs import Transformer2DModelOutput
-from ..modeling_utils import ModelMixin
-from ..normalization import AdaLayerNorm, CogVideoXLayerNormZero
+from diffusers_lib.configuration_utils import ConfigMixin, register_to_config
+from diffusers_lib.loaders import PeftAdapterMixin
+from diffusers_lib.utils import USE_PEFT_BACKEND, logging, scale_lora_layers, unscale_lora_layers
+from diffusers_lib.utils.torch_utils import maybe_allow_in_graph
+from diffusers_lib.models.modeling_outputs import Transformer2DModelOutput
+from diffusers_lib.models.modeling_utils import ModelMixin
+
+from .attention import Attention, FeedForward
+from .attention_processor import AttentionProcessor, CogVideoXAttnProcessor2_0, FusedCogVideoXAttnProcessor2_0
+from .cache_utils import CacheMixin
+from .embeddings import CogVideoXPatchEmbed, TimestepEmbedding, Timesteps
+from .normalization import AdaLayerNorm, CogVideoXLayerNormZero
 
 
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name

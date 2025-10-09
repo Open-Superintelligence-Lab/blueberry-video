@@ -18,9 +18,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from ..utils import deprecate, logging
-from ..utils.import_utils import is_torch_npu_available, is_torch_xla_available, is_xformers_available
-from ..utils.torch_utils import maybe_allow_in_graph
+from diffusers_lib.utils import deprecate, logging
+from diffusers_lib.utils.import_utils import is_torch_npu_available, is_torch_xla_available, is_xformers_available
+from diffusers_lib.utils.torch_utils import maybe_allow_in_graph
 from .activations import GEGLU, GELU, ApproximateGELU, FP32SiLU, LinearActivation, SwiGLU
 from .attention_processor import Attention, AttentionProcessor, JointAttnProcessor2_0
 from .embeddings import SinusoidalPositionalEmbedding
