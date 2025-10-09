@@ -9,6 +9,7 @@ from torch.utils.data import DataLoader
 from pathlib import Path
 import yaml
 from tqdm import tqdm
+import argparse
 
 from models import CogVideoXTransformer3DModel, HunyuanVideoTransformer3DModel
 from data.video_dataset import VideoDataset
@@ -25,7 +26,6 @@ def train_epoch(model, dataloader, optimizer, scheduler, device, epoch):
     for batch_idx, batch in enumerate(pbar):
         # Move batch to device
         latents = batch['latents'].to(device)
-        prompts = batch['prompts']
         
         # Forward pass
         optimizer.zero_grad()
@@ -37,11 +37,16 @@ def train_epoch(model, dataloader, optimizer, scheduler, device, epoch):
         # Add noise to latents
         noisy_latents = latents + noise
         
+        # Create dummy text embeddings (batch_size, seq_len, hidden_dim)
+        batch_size = latents.shape[0]
+        # Typical CLIP text embedding dimension is 768, sequence length 77
+        dummy_text_embeddings = torch.zeros(batch_size, 77, 768, device=device)
+        
         # Predict noise
         model_output = model(
             hidden_states=noisy_latents,
             timestep=timesteps,
-            encoder_hidden_states=prompts,
+            encoder_hidden_states=dummy_text_embeddings,
             return_dict=True
         )
         
@@ -61,9 +66,16 @@ def train_epoch(model, dataloader, optimizer, scheduler, device, epoch):
 
 
 def main():
+    # Parse arguments
+    parser = argparse.ArgumentParser(description='Train video generation model')
+    parser.add_argument('--config', type=str, default='configs/video/train/cogvideox.yaml',
+                        help='Path to config file')
+    args = parser.parse_args()
+    
     # Load configuration
-    config_path = "configs/video/train/cogvideox.yaml"
+    config_path = args.config
     config = load_config(config_path)
+    print(f"Loading config from: {config_path}")
     
     # Set device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -73,12 +85,23 @@ def main():
     model_type = config.get('model_type', 'cogvideox')
     
     if model_type == 'cogvideox':
+        # Calculate sample_frames based on num_frames and temporal compression ratio
+        # formula: sample_frames = ((num_frames - 1) * temporal_compression_ratio + 1)
+        temporal_compression_ratio = config.get('temporal_compression_ratio', 4)
+        num_frames = config['num_frames']
+        sample_frames = ((num_frames - 1) * temporal_compression_ratio + 1)
+        
         model = CogVideoXTransformer3DModel(
             num_attention_heads=config['num_attention_heads'],
             attention_head_dim=config['attention_head_dim'],
             in_channels=config['in_channels'],
             out_channels=config.get('out_channels', config['in_channels']),
             num_layers=config['num_layers'],
+            text_embed_dim=768,  # Standard CLIP dimension
+            sample_width=config['resolution'],
+            sample_height=config['resolution'],
+            sample_frames=sample_frames,
+            temporal_compression_ratio=temporal_compression_ratio,
         )
     elif model_type == 'hunyuan':
         model = HunyuanVideoTransformer3DModel(

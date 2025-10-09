@@ -1,0 +1,35 @@
+# Overfitting Configuration - Train on 5 Sample Videos
+# Reduced resolution and model size for faster training
+
+# Model settings (smaller model for faster overfitting)
+model_type: cogvideox
+num_attention_heads: 4
+attention_head_dim: 32
+in_channels: 3  # RGB videos (not VAE-encoded)
+num_layers: 8
+
+# Data settings (reduced resolution for speed)
+data_path: ./data/videos
+resolution: 128  # Reduced from 256
+num_frames: 8    # Reduced from 16
+
+# Training settings (optimized for overfitting on 5 videos)
+batch_size: 1
+num_epochs: 50   # Reduced for initial testing
+learning_rate: 0.0005  # Higher learning rate (5e-4)
+weight_decay: 0.0    # No weight decay for overfitting
+optimizer: adamw
+beta1: 0.9
+beta2: 0.999
+
+# Scheduler settings
+scheduler: cosine
+min_lr: 0.000001  # 1e-6
+
+# Checkpointing
+save_dir: ./checkpoints/overfit
+save_every: 20
+
+# Data loading
+num_workers: 2
+

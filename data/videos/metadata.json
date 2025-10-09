@@ -1,5 +1,7 @@
 {
-  "sample_001_circle": "A green circle moving from left to right",
-  "sample_002_square": "A blue square expanding from center",
-  "sample_003_line": "A red line rotating around center"
+  "sample_beach": "An animated cartoon scene with colorful characters outdoors in nature",
+  "sample_countdown": "A dramatic outdoor scene with fire and motion",
+  "sample_elephants": "An animated science fiction scene with surreal visual elements",
+  "sample_nature": "A jellyfish swimming gracefully underwater with flowing movements",
+  "sample_sintel": "An animated fantasy scene with a character in a mystical setting"
 }

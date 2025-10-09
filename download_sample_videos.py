@@ -24,6 +24,21 @@ sample_videos = [
         "url": "https://test-videos.co.uk/vids/jellyfish/mp4/h264/360/Jellyfish_360_10s_1MB.mp4",
         "description": "Jellyfish sample (360p, 10s)"
     },
+    {
+        "name": "sample_sintel.mp4",
+        "url": "https://test-videos.co.uk/vids/sintel/mp4/h264/360/Sintel_360_10s_1MB.mp4",
+        "description": "Sintel sample (360p, 10s)"
+    },
+    {
+        "name": "sample_elephants.mp4",
+        "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "description": "Google sample video - Elephants Dream"
+    },
+    {
+        "name": "sample_countdown.mp4",
+        "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        "description": "Google sample video - For Bigger Blazes"
+    },
 ]
 
 print(f"\n📁 Download directory: {output_dir}")

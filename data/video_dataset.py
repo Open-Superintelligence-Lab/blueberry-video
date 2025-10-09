@@ -79,10 +79,10 @@ class VideoDataset(Dataset):
         
         cap.release()
         
-        # Convert to tensor [T, H, W, C] -> [C, T, H, W]
+        # Convert to tensor [T, H, W, C] -> [T, C, H, W]
         frames = np.stack(frames, axis=0)
         frames = torch.from_numpy(frames).float()
-        frames = frames.permute(3, 0, 1, 2)  # [C, T, H, W]
+        frames = frames.permute(0, 3, 1, 2)  # [T, C, H, W]
         
         # Normalize to [-1, 1]
         frames = (frames / 127.5) - 1.0
@@ -99,8 +99,8 @@ class VideoDataset(Dataset):
             latents = self.load_video(video_path)
         except Exception as e:
             print(f"Error loading {video_path}: {e}")
-            # Return dummy data
-            latents = torch.randn(3, self.num_frames, self.resolution, self.resolution)
+            # Return dummy data in shape [T, C, H, W]
+            latents = torch.randn(self.num_frames, 3, self.resolution, self.resolution)
         
         # Get prompt from metadata
         prompt = self.metadata.get(video_name, "")
